@@ -1,55 +1,75 @@
-# GameStore
+# GameStore - Tienda de Videojuegos
 
-Tienda de videojuegos desarrollada con Bootstrap 5 y JavaScript.
-
-Actividad sumativa semana 6 — Desarrollo Frontend I (PFY2201)
-Jean Santoni Camilo
+## Descripción
+Proyecto de ecommerce para una tienda de videojuegos. Desarrollado como actividad
+académica para optimizar la lógica y el rendimiento de una página web con Bootstrap 5
+y JavaScript, sobre la base del sitio HTML/CSS de la actividad anterior.
 
 ## Demo
-
 https://jeansantoni02.github.io/frontend1/
 
-## Estructura
+## Tecnologías Utilizadas
+- HTML5
+- CSS3
+- Bootstrap 5.3 (CDN)
+- Bootstrap Icons
+- JavaScript ES6+
+- Fetch API
+- localStorage
 
-```
-index.html
-assets/
-  css/styles.css
-  js/ui.js
-  js/carrito.js
-  js/productos.js
-  js/app.js
-  data/productos.json
-  img/
-capturas/
-```
+## Estructura del Proyecto
+- index.html - Página principal
+- assets/css/styles.css - Estilos propios
+- assets/js/ui.js - Formato de precios, avisos y estados
+- assets/js/carrito.js - Lógica del carrito
+- assets/js/productos.js - Carga del catálogo y filtros
+- assets/js/app.js - Eventos de la interfaz
+- assets/data/productos.json - Catálogo de productos
+- assets/img/ - Portadas de los juegos y logo
+- capturas/ - Capturas de pantalla de la actividad
 
-## Funcionalidades
+## Características
+- Catálogo de 12 juegos cargado desde un JSON local con la Fetch API
+- Barra de navegación responsiva con categorías (Acción, Aventura, Deportes, Carreras)
+- Buscador por título, categoría o plataforma (evento submit)
+- Agregar al carrito con evento click y contador dinámico en la barra
+- Panel lateral del carrito con cantidades, subtotales y total
+- Carrito guardado en localStorage, se mantiene al recargar la página
+- Orden del catálogo por precio, nombre o valoración
+- Mensaje de error amigable si el JSON no carga, con botón para reintentar
+- Placeholders de carga mientras se descargan los datos
+- Pie de página con información de contacto y redes sociales
 
-- Catálogo de 12 juegos cargado desde `assets/data/productos.json` con la Fetch API.
-- Barra de navegación responsiva con categorías (Acción, Aventura, Deportes, Carreras).
-- Buscador por título, categoría o plataforma (evento `submit`).
-- Agregar al carrito (evento `click`), con contador, panel lateral, cantidades y total.
-- Carrito guardado en `localStorage`, así se mantiene al recargar.
-- Orden por precio, nombre o valoración.
-- Mensaje de error si el JSON no se puede cargar, con botón para reintentar.
-- Pie de página con datos de contacto y redes sociales.
+## Requisitos de la Actividad
+- Maquetación con Bootstrap 5 y diseño responsivo
+- Barra de navegación con categorías simuladas
+- Pie de página con contacto y redes sociales
+- Evento click para agregar productos al carrito
+- Evento submit para procesar el formulario de búsqueda
+- Manipulación dinámica del DOM
+- Carga de datos con la Fetch API desde un JSON local
+- Gestión de errores con mensaje amigable
+- Código dividido en funciones reutilizables y comentado
 
-## Cómo ejecutarlo
+## Cómo Ejecutar
+La página usa fetch para leer el JSON y los navegadores bloquean esa lectura si el
+archivo se abre con doble clic. Hay que levantar un servidor local:
 
-La página usa `fetch` para leer el JSON, y los navegadores bloquean esa lectura
-si el archivo se abre con doble clic. Hay que levantar un servidor local:
+1. Clonar el repositorio
+2. Ejecutar `python -m http.server 8000` en la carpeta del proyecto
+3. Abrir http://localhost:8000 en el navegador
 
-```bash
-python -m http.server 8000
-```
+En NetBeans basta con usar Run, que levanta su propio servidor.
 
-Luego abrir http://localhost:8000
+## Dispositivos Soportados
+- Escritorio (>1024px)
+- Tablet (768px-1024px)
+- Móvil (<768px)
+- Móvil pequeño (<480px)
 
-En NetBeans basta con usar Run (el IDE levanta su propio servidor).
+## Autor
+Jean Santoni
+GitHub: JeanSantoni02
 
-## Tecnologías
-
-- HTML5 y CSS3
-- Bootstrap 5.3 y Bootstrap Icons (CDN)
-- JavaScript (ES6+): Fetch API, async/await, módulos con patrón IIFE
+## Licencia
+MIT - Uso educativo
