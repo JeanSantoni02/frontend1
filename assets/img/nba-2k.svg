@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img"
+     aria-label="Portada de NBA 2K25">
+  <defs>
+    <linearGradient id="g-nba-2k" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a1f0f"/>
+      <stop offset="1" stop-color="#1c0e05"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g-nba-2k)"/>
+  <circle cx="330" cy="90" r="120" fill="#ff8c42" opacity="0.13"/>
+  <circle cx="60" cy="430" r="90" fill="#ff8c42" opacity="0.10"/>
+  <rect x="0" y="0" width="8" height="500" fill="#ff8c42"/>
+  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    <text font-size="44" font-weight="700" fill="#ffffff">
+      <tspan x="200" y="250">NBA 2K25</tspan>
+    </text>
+    <text x="200" y="400" font-size="20" font-weight="600" fill="#ff8c42"
+          letter-spacing="2">DEPORTES</text>
+    <text x="200" y="432" font-size="17" fill="#c9d1d9">Xbox</text>
+  </g>
+  <rect x="24" y="24" width="352" height="452" fill="none" stroke="#ff8c42"
+        stroke-opacity="0.35" stroke-width="2" rx="6"/>
+</svg>

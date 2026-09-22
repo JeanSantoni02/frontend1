@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img"
+     aria-label="Portada de Elden Ring">
+  <defs>
+    <linearGradient id="g-elden-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a2f1c"/>
+      <stop offset="1" stop-color="#1c1608"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g-elden-ring)"/>
+  <circle cx="330" cy="90" r="120" fill="#d4af37" opacity="0.13"/>
+  <circle cx="60" cy="430" r="90" fill="#d4af37" opacity="0.10"/>
+  <rect x="0" y="0" width="8" height="500" fill="#d4af37"/>
+  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    <text font-size="38" font-weight="700" fill="#ffffff">
+      <tspan x="200" y="250">Elden Ring</tspan>
+    </text>
+    <text x="200" y="400" font-size="20" font-weight="600" fill="#d4af37"
+          letter-spacing="2">ACCIÓN</text>
+    <text x="200" y="432" font-size="17" fill="#c9d1d9">PC</text>
+  </g>
+  <rect x="24" y="24" width="352" height="452" fill="none" stroke="#d4af37"
+        stroke-opacity="0.35" stroke-width="2" rx="6"/>
+</svg>

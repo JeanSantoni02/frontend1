@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img"
+     aria-label="Portada de EA Sports FC 25">
+  <defs>
+    <linearGradient id="g-ea-fc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b3d2e"/>
+      <stop offset="1" stop-color="#04241a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g-ea-fc)"/>
+  <circle cx="330" cy="90" r="120" fill="#00d26a" opacity="0.13"/>
+  <circle cx="60" cy="430" r="90" fill="#00d26a" opacity="0.10"/>
+  <rect x="0" y="0" width="8" height="500" fill="#00d26a"/>
+  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    <text font-size="32" font-weight="700" fill="#ffffff">
+      <tspan x="200" y="231">EA Sports FC</tspan>
+      <tspan x="200" y="269">25</tspan>
+    </text>
+    <text x="200" y="400" font-size="20" font-weight="600" fill="#00d26a"
+          letter-spacing="2">DEPORTES</text>
+    <text x="200" y="432" font-size="17" fill="#c9d1d9">PS5</text>
+  </g>
+  <rect x="24" y="24" width="352" height="452" fill="none" stroke="#00d26a"
+        stroke-opacity="0.35" stroke-width="2" rx="6"/>
+</svg>

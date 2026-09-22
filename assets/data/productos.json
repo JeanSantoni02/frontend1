@@ -1,0 +1,181 @@
+{
+  "tienda": "GameStore",
+  "moneda": "CLP",
+  "actualizado": "2026-09-21",
+  "categorias": [
+    {
+      "id": "accion",
+      "nombre": "Acción"
+    },
+    {
+      "id": "aventura",
+      "nombre": "Aventura"
+    },
+    {
+      "id": "deportes",
+      "nombre": "Deportes"
+    },
+    {
+      "id": "carreras",
+      "nombre": "Carreras"
+    }
+  ],
+  "productos": [
+    {
+      "id": "god-of-war",
+      "titulo": "God of War Ragnarök",
+      "precio": 59990,
+      "categoria": "accion",
+      "categoriaNombre": "Acción",
+      "plataforma": "PS5",
+      "rating": 4.9,
+      "stock": 12,
+      "destacado": true,
+      "imagen": "assets/img/god-of-war.svg",
+      "descripcion": "Kratos y Atreus enfrentan el Ragnarök en los Nueve Reinos."
+    },
+    {
+      "id": "last-of-us",
+      "titulo": "The Last of Us Part II",
+      "precio": 49990,
+      "categoria": "aventura",
+      "categoriaNombre": "Aventura",
+      "plataforma": "PS5",
+      "rating": 4.7,
+      "stock": 8,
+      "destacado": true,
+      "imagen": "assets/img/last-of-us.svg",
+      "descripcion": "Una historia de supervivencia y venganza en un mundo devastado."
+    },
+    {
+      "id": "cyberpunk",
+      "titulo": "Cyberpunk 2077",
+      "precio": 29990,
+      "categoria": "accion",
+      "categoriaNombre": "Acción",
+      "plataforma": "PC",
+      "rating": 4.3,
+      "stock": 20,
+      "destacado": false,
+      "imagen": "assets/img/cyberpunk.svg",
+      "descripcion": "Rol de mundo abierto en la megaciudad de Night City."
+    },
+    {
+      "id": "ea-fc",
+      "titulo": "EA Sports FC 25",
+      "precio": 64990,
+      "categoria": "deportes",
+      "categoriaNombre": "Deportes",
+      "plataforma": "PS5",
+      "rating": 4.1,
+      "stock": 15,
+      "destacado": true,
+      "imagen": "assets/img/ea-fc.svg",
+      "descripcion": "El simulador de futbol con licencias oficiales y modo carrera."
+    },
+    {
+      "id": "mario-kart",
+      "titulo": "Mario Kart 8 Deluxe",
+      "precio": 44990,
+      "categoria": "carreras",
+      "categoriaNombre": "Carreras",
+      "plataforma": "Switch",
+      "rating": 4.8,
+      "stock": 18,
+      "destacado": false,
+      "imagen": "assets/img/mario-kart.svg",
+      "descripcion": "Carreras caoticas con 48 pistas y multijugador local."
+    },
+    {
+      "id": "zelda-totk",
+      "titulo": "Zelda: Tears of the Kingdom",
+      "precio": 54990,
+      "categoria": "aventura",
+      "categoriaNombre": "Aventura",
+      "plataforma": "Switch",
+      "rating": 5.0,
+      "stock": 10,
+      "destacado": true,
+      "imagen": "assets/img/zelda-totk.svg",
+      "descripcion": "Explora Hyrule y el cielo con nuevas habilidades de construccion."
+    },
+    {
+      "id": "elden-ring",
+      "titulo": "Elden Ring",
+      "precio": 47990,
+      "categoria": "accion",
+      "categoriaNombre": "Acción",
+      "plataforma": "PC",
+      "rating": 4.9,
+      "stock": 14,
+      "destacado": false,
+      "imagen": "assets/img/elden-ring.svg",
+      "descripcion": "Mundo abierto de dificultad exigente en las Tierras Intermedias."
+    },
+    {
+      "id": "gran-turismo",
+      "titulo": "Gran Turismo 7",
+      "precio": 52990,
+      "categoria": "carreras",
+      "categoriaNombre": "Carreras",
+      "plataforma": "PS5",
+      "rating": 4.5,
+      "stock": 9,
+      "destacado": false,
+      "imagen": "assets/img/gran-turismo.svg",
+      "descripcion": "Simulador de conduccion con mas de 400 vehiculos."
+    },
+    {
+      "id": "nba-2k",
+      "titulo": "NBA 2K25",
+      "precio": 61990,
+      "categoria": "deportes",
+      "categoriaNombre": "Deportes",
+      "plataforma": "Xbox",
+      "rating": 3.9,
+      "stock": 11,
+      "destacado": false,
+      "imagen": "assets/img/nba-2k.svg",
+      "descripcion": "Baloncesto con plantillas actualizadas y modo MiCarrera."
+    },
+    {
+      "id": "hollow-knight",
+      "titulo": "Hollow Knight",
+      "precio": 12990,
+      "categoria": "aventura",
+      "categoriaNombre": "Aventura",
+      "plataforma": "PC",
+      "rating": 4.9,
+      "stock": 30,
+      "destacado": false,
+      "imagen": "assets/img/hollow-knight.svg",
+      "descripcion": "Metroidvania dibujado a mano en el reino de Hallownest."
+    },
+    {
+      "id": "forza-horizon",
+      "titulo": "Forza Horizon 5",
+      "precio": 39990,
+      "categoria": "carreras",
+      "categoriaNombre": "Carreras",
+      "plataforma": "Xbox",
+      "rating": 4.7,
+      "stock": 16,
+      "destacado": true,
+      "imagen": "assets/img/forza-horizon.svg",
+      "descripcion": "Mundo abierto en Mexico con eventos de temporada."
+    },
+    {
+      "id": "hades-2",
+      "titulo": "Hades II",
+      "precio": 24990,
+      "categoria": "accion",
+      "categoriaNombre": "Acción",
+      "plataforma": "PC",
+      "rating": 4.8,
+      "stock": 22,
+      "destacado": false,
+      "imagen": "assets/img/hades-2.svg",
+      "descripcion": "Roguelike de accion en el inframundo griego."
+    }
+  ]
+}

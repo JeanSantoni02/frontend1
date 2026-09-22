@@ -1,0 +1,5 @@
+nbproject/private/
+node_modules/
+bower_components/
+.DS_Store
+Thumbs.db

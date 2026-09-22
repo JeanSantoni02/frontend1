@@ -1,49 +1,55 @@
-# GameStore - Tienda de Videojuegos
+# GameStore
 
-## Descripción
-Proyecto de ecommerce básico para una tienda de videojuegos. Desarrollado como actividad académica para aplicar HTML5 y CSS3, con enfoque en diseño responsivo y buenas prácticas de desarrollo web.
+Tienda de videojuegos desarrollada con Bootstrap 5 y JavaScript.
 
-## Tecnologías Utilizadas
-- HTML5
-- CSS3
-- Flexbox
-- CSS Grid
-- Media Queries
+Actividad sumativa semana 6 — Desarrollo Frontend I (PFY2201)
+Jean Santoni Camilo
 
-## Estructura del Proyecto
-- public_html/index.html - Página principal
-- public_html/css/styles.css - Hoja de estilos
+## Demo
 
-## Características
-- Diseño responsivo para móvil, tablet y escritorio
-- Barra de navegación con Flexbox
-- Catálogo de productos con CSS Grid
-- Efectos hover en tarjetas y botones
-- Selectores avanzados (nth-child, hover)
-- Modelo de cajas (padding, margin, border)
+https://jeansantoni02.github.io/frontend1/
 
-## Requisitos de la Actividad
-- Hoja de estilos CSS externa
-- Modelo de cajas aplicado
-- Colores y tipografía adecuados
-- Diseño responsivo con Flexbox y Grid
-- Media queries para diferentes dispositivos
-- Selectores avanzados
+## Estructura
 
-## Cómo Ejecutar
-1. Clonar el repositorio
-2. Abrir public_html/index.html en el navegador
-3. O importar en NetBeans como proyecto HTML5/JS
+```
+index.html
+assets/
+  css/styles.css
+  js/ui.js
+  js/carrito.js
+  js/productos.js
+  js/app.js
+  data/productos.json
+  img/
+capturas/
+```
 
-## Dispositivos Soportados
-- Escritorio (>1024px)
-- Tablet (768px-1024px)
-- Móvil (<768px)
-- Móvil pequeño (<480px)
+## Funcionalidades
 
-## Autor
-Jean Santoni
-GitHub: JeanSantoni02
+- Catálogo de 12 juegos cargado desde `assets/data/productos.json` con la Fetch API.
+- Barra de navegación responsiva con categorías (Acción, Aventura, Deportes, Carreras).
+- Buscador por título, categoría o plataforma (evento `submit`).
+- Agregar al carrito (evento `click`), con contador, panel lateral, cantidades y total.
+- Carrito guardado en `localStorage`, así se mantiene al recargar.
+- Orden por precio, nombre o valoración.
+- Mensaje de error si el JSON no se puede cargar, con botón para reintentar.
+- Pie de página con datos de contacto y redes sociales.
 
-## Licencia
-MIT - Uso educativo
+## Cómo ejecutarlo
+
+La página usa `fetch` para leer el JSON, y los navegadores bloquean esa lectura
+si el archivo se abre con doble clic. Hay que levantar un servidor local:
+
+```bash
+python -m http.server 8000
+```
+
+Luego abrir http://localhost:8000
+
+En NetBeans basta con usar Run (el IDE levanta su propio servidor).
+
+## Tecnologías
+
+- HTML5 y CSS3
+- Bootstrap 5.3 y Bootstrap Icons (CDN)
+- JavaScript (ES6+): Fetch API, async/await, módulos con patrón IIFE
