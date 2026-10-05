@@ -1,75 +1,153 @@
-# GameStore - Tienda de Videojuegos
+# GameStore
 
-## Descripción
-Proyecto de ecommerce para una tienda de videojuegos. Desarrollado como actividad
-académica para optimizar la lógica y el rendimiento de una página web con Bootstrap 5
-y JavaScript, sobre la base del sitio HTML/CSS de la actividad anterior.
+Tienda de videojuegos construida con React. Proyecto de la asignatura
+Desarrollo Frontend I (PFY2201), Duoc UC.
 
-## Demo
-https://jeansantoni02.github.io/frontend1/
+**Sitio en línea:** https://jeansantoni02.github.io/frontend1/
 
-## Tecnologías Utilizadas
-- HTML5
-- CSS3
-- Bootstrap 5.3 (CDN)
-- Bootstrap Icons
-- JavaScript ES6+
-- Fetch API
-- localStorage
+---
 
-## Estructura del Proyecto
-- index.html - Página principal
-- assets/css/styles.css - Estilos propios
-- assets/js/ui.js - Formato de precios, avisos y estados
-- assets/js/carrito.js - Lógica del carrito
-- assets/js/productos.js - Carga del catálogo y filtros
-- assets/js/app.js - Eventos de la interfaz
-- assets/data/productos.json - Catálogo de productos
-- assets/img/ - Portadas de los juegos y logo
-- capturas/ - Capturas de pantalla de la actividad
+## Qué hace
 
-## Características
-- Catálogo de 12 juegos cargado desde un JSON local con la Fetch API
-- Barra de navegación responsiva con categorías (Acción, Aventura, Deportes, Carreras)
-- Buscador por título, categoría o plataforma (evento submit)
-- Agregar al carrito con evento click y contador dinámico en la barra
-- Panel lateral del carrito con cantidades, subtotales y total
-- Carrito guardado en localStorage, se mantiene al recargar la página
-- Orden del catálogo por precio, nombre o valoración
-- Mensaje de error amigable si el JSON no carga, con botón para reintentar
-- Placeholders de carga mientras se descargan los datos
-- Pie de página con información de contacto y redes sociales
+Un catálogo de doce juegos que se carga desde un archivo JSON y un carrito de
+compras que sobrevive a la recarga de la página.
 
-## Requisitos de la Actividad
-- Maquetación con Bootstrap 5 y diseño responsivo
-- Barra de navegación con categorías simuladas
-- Pie de página con contacto y redes sociales
-- Evento click para agregar productos al carrito
-- Evento submit para procesar el formulario de búsqueda
-- Manipulación dinámica del DOM
-- Carga de datos con la Fetch API desde un JSON local
-- Gestión de errores con mensaje amigable
-- Código dividido en funciones reutilizables y comentado
+- Cada juego muestra nombre, precio normal, precio de oferta, descripción, imagen,
+  categoría, plataforma y valoración.
+- El carrito permite agregar y eliminar productos, ajustar cantidades, y calcula
+  el contador de unidades y el total a pagar.
+- El catálogo se filtra por categoría, por texto y por ofertas, y se ordena por
+  precio o valoración.
 
-## Cómo Ejecutar
-La página usa fetch para leer el JSON y los navegadores bloquean esa lectura si el
-archivo se abre con doble clic. Hay que levantar un servidor local:
+---
 
-1. Clonar el repositorio
-2. Ejecutar `python -m http.server 8000` en la carpeta del proyecto
-3. Abrir http://localhost:8000 en el navegador
+## Cómo está hecho
 
-En NetBeans basta con usar Run, que levanta su propio servidor.
+| Pieza | Para qué |
+|---|---|
+| React 18 | Componentes y estado de la interfaz |
+| Vite 5 | Servidor de desarrollo y empaquetado |
+| Bootstrap 5 | Grilla responsiva y utilidades, por CDN |
+| CSS propio | Identidad visual de la tienda |
 
-## Dispositivos Soportados
-- Escritorio (>1024px)
-- Tablet (768px-1024px)
-- Móvil (<768px)
-- Móvil pequeño (<480px)
+### Estructura
 
-## Autor
-Jean Santoni
-GitHub: JeanSantoni02
+```
+src/
+├── main.jsx                 punto de entrada
+├── App.jsx                  arma la pantalla y conecta los estados
+├── componentes/
+│   ├── Encabezado.jsx       marca y botón del carrito con su contador
+│   ├── Filtros.jsx          búsqueda, orden, categorías y ofertas
+│   ├── ListaProductos.jsx   grilla, carga, error y sin resultados
+│   ├── TarjetaProducto.jsx  un juego del catálogo
+│   └── Carrito.jsx          panel lateral con el detalle y el total
+├── hooks/
+│   ├── useProductos.js      carga el catálogo con useEffect
+│   └── useCarrito.js        estado del carrito y sus totales
+├── utilidades/
+│   └── formato.js           precios en pesos y cálculo de descuento
+└── estilos/
+    └── estilos.css
 
-## Licencia
-MIT - Uso educativo
+public/assets/
+├── data/productos.json      el catálogo
+└── img/                     portadas en SVG
+```
+
+---
+
+## Estado con `useState`
+
+| Dónde | Qué guarda |
+|---|---|
+| `useProductos` | La lista de productos, las categorías, si está cargando y el error |
+| `useCarrito` | Las líneas del carrito, de donde salen el contador y el total |
+| `App` | Búsqueda, categoría, orden, si se ven solo ofertas y si el panel está abierto |
+
+El panel del carrito no se abre solo al agregar un juego: el contador del
+encabezado y el texto del botón ya avisan que entró, y así se puede seguir
+navegando el catálogo sin interrupciones.
+
+## Efectos con `useEffect`
+
+Dos efectos, cada uno con una responsabilidad:
+
+- **Cargar el catálogo.** `useProductos` pide el JSON al montar el componente,
+  simulando una fuente externa. Maneja el error y expone un `reintentar` que
+  vuelve a disparar el efecto.
+- **Guardar el carrito.** `useCarrito` escribe en `localStorage` cada vez que
+  cambian las líneas, de modo que el carrito sigue ahí al recargar.
+
+El efecto de carga usa una bandera para no actualizar el estado si el componente
+se desmonta antes de que llegue la respuesta.
+
+## Renderizado condicional
+
+| Situación | Qué se muestra |
+|---|---|
+| Cargando | Seis tarjetas vacías con animación, en vez de una pantalla en blanco |
+| Error al cargar | Aviso con el motivo y un botón para reintentar |
+| Ningún resultado | Mensaje de búsqueda sin coincidencias |
+| Carrito vacío | Mensaje invitando a agregar un juego, en vez del total |
+| Juego ya agregado | El botón pasa de "Agregar al carrito" a "En el carrito", en verde |
+| Juego sin stock | El botón queda deshabilitado con el texto "Sin stock" |
+| Juego en oferta | Aparece la etiqueta con el porcentaje y el precio normal tachado |
+| Carrito con productos | El contador aparece en el encabezado |
+| Filtro de ofertas | El botón alterna entre "Ver solo ofertas" y "Viendo solo ofertas" |
+
+---
+
+## Cómo ejecutarlo
+
+Requiere Node.js 18 o superior.
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Queda en http://localhost:5173.
+
+Para generar la versión de producción:
+
+```bash
+npm run build
+```
+
+```bash
+npm run preview
+```
+
+Para publicar en GitHub Pages:
+
+```bash
+npm run deploy
+```
+
+El build se arma con rutas relativas, así que funciona igual servido desde la
+raíz de un dominio o desde un subdirectorio como el de GitHub Pages.
+
+---
+
+## Evidencia
+
+Las capturas de la semana 8 están en [`capturas/semana8/`](capturas/semana8/) y
+reunidas en el informe
+[Evidencias Semana 8](capturas/Evidencias%20Semana%208%20Jean%20Santoni%20Frontend%201.pdf).
+
+Se regeneran solas con la aplicación compilada y servida:
+
+```bash
+node scripts/capturas.mjs
+```
+
+El script recorre la aplicación con Chrome: carga el catálogo, agrega y elimina
+productos del carrito, aplica filtros y fuerza el error de red para capturar cada
+estado sin intervención manual.
+
+Las capturas de la semana 6, cuando el proyecto era JavaScript sin framework,
+quedaron en [`capturas/`](capturas/).
