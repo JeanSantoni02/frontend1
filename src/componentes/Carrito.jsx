@@ -1,7 +1,6 @@
 import { precio } from '../utilidades/formato.js';
 
-// Renderizado condicional: con el carrito vacio muestra un mensaje en vez
-// del detalle y el total
+// Con el carrito vacio se muestra un mensaje en vez del detalle y el total
 export default function Carrito({
   lineas, totalUnidades, totalPesos, abierto, onCerrar, onQuitarUnidad, onEliminar, onVaciar
 }) {
@@ -30,7 +29,7 @@ export default function Carrito({
                 <img src={linea.imagen} alt="" />
 
                 <div className="gs-linea__datos">
-                  <p className="gs-linea__titulo">{linea.titulo}</p>
+                  <p className="gs-linea__titulo">{linea.nombre}</p>
                   <p className="gs-texto-suave">
                     {linea.cantidad} × {precio(linea.precio)}
                   </p>
@@ -42,9 +41,9 @@ export default function Carrito({
                   </span>
                   <div>
                     <button type="button" onClick={() => onQuitarUnidad(linea.id)}
-                            aria-label={`Quitar una unidad de ${linea.titulo}`}>−</button>
+                            aria-label={`Quitar una unidad de ${linea.nombre}`}>−</button>
                     <button type="button" onClick={() => onEliminar(linea.id)}
-                            aria-label={`Eliminar ${linea.titulo} del carrito`}>🗑</button>
+                            aria-label={`Eliminar ${linea.nombre} del carrito`}>🗑</button>
                   </div>
                 </div>
               </li>

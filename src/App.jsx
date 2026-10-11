@@ -1,133 +1,106 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import Encabezado from './componentes/Encabezado.jsx';
+import BarraNavegacion from './componentes/BarraNavegacion.jsx';
+import Portada from './componentes/Portada.jsx';
 import Filtros from './componentes/Filtros.jsx';
-import ListaProductos from './componentes/ListaProductos.jsx';
+import ListaVideojuegos from './componentes/ListaVideojuegos.jsx';
+import AdministrarCatalogo from './componentes/AdministrarCatalogo.jsx';
+import Contacto from './componentes/Contacto.jsx';
 import Carrito from './componentes/Carrito.jsx';
+import PieDePagina from './componentes/PieDePagina.jsx';
 
-import { useProductos } from './hooks/useProductos.js';
+import { useCatalogo } from './hooks/useCatalogo.js';
 import { useCarrito } from './hooks/useCarrito.js';
+import { filtrar, ordenar } from './utilidades/catalogo.js';
 import { hayOferta } from './utilidades/formato.js';
 
-export default function App() {
-  // Catalogo: lo trae el efecto del hook desde el JSON
-  const { productos, categorias, cargando, error, reintentar } = useProductos();
+const SECCIONES = ['inicio', 'catalogo', 'administrar', 'contacto'];
 
-  // Carrito: lineas, totales y las acciones que las modifican
+export default function App() {
+  const catalogo = useCatalogo();
   const carrito = useCarrito();
 
-  // Estado de los controles de la vista
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('todas');
   const [orden, setOrden] = useState('relevancia');
   const [soloOfertas, setSoloOfertas] = useState(false);
   const [carritoAbierto, setCarritoAbierto] = useState(false);
+  const [modoAdmin, setModoAdmin] = useState(false);
+  const [mensajes, setMensajes] = useState([]);
+  const [seccionActiva, setSeccionActiva] = useState('inicio');
 
-  // Se recalcula solo cuando cambia el catalogo o algun filtro
+  // Marca en la barra la seccion que esta a la vista
+  useEffect(() => {
+    const observador = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => { if (e.isIntersecting) setSeccionActiva(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    SECCIONES.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observador.observe(el);
+    });
+    return () => observador.disconnect();
+  }, [catalogo.cargando]);
+
   const visibles = useMemo(
-    () => ordenar(filtrar(productos, busqueda, categoria, soloOfertas), orden),
-    [productos, busqueda, categoria, soloOfertas, orden]
+    () => ordenar(filtrar(catalogo.videojuegos, { busqueda, categoria, soloOfertas }), orden),
+    [catalogo.videojuegos, busqueda, categoria, soloOfertas, orden]
   );
 
-  // No abre el panel: el contador y el texto del boton ya avisan que entro
+  const eliminarDelCatalogo = (videojuego) => {
+    if (!window.confirm(`¿Eliminar «${videojuego.nombre}» del catálogo?`)) return;
+    catalogo.eliminar(videojuego.id);
+    // Un juego que ya no se vende tampoco puede quedar en el carrito
+    carrito.eliminar(videojuego.id);
+  };
+
+  const restablecer = () => {
+    catalogo.restablecer();
+    setModoAdmin(false);
+  };
 
   return (
     <>
-      <a className="skip-link visually-hidden-focusable" href="#catalogo">
-        Saltar al catalogo
-      </a>
+      <a className="skip-link visually-hidden-focusable" href="#catalogo">Saltar al catálogo</a>
 
-      <Encabezado
-        totalUnidades={carrito.totalUnidades}
-        onAbrirCarrito={() => setCarritoAbierto(true)}
-      />
+      <BarraNavegacion totalUnidades={carrito.totalUnidades} seccionActiva={seccionActiva}
+                       onAbrirCarrito={() => setCarritoAbierto(true)} />
 
       <main className="container py-4 py-lg-5">
-        <section className="gs-portada">
-          <p className="gs-portada__epigrafe">Catalogo 2026</p>
-          <h1>Los juegos que te faltan, al precio que esperabas</h1>
-          <p className="gs-portada__bajada">
-            Doce titulos con entrega digital inmediata. Busca, filtra y arma tu carrito.
-          </p>
+        <Portada cantidad={catalogo.videojuegos.length}
+                 ofertas={catalogo.videojuegos.filter(hayOferta).length} />
+
+        <section id="catalogo" className="gs-seccion" aria-labelledby="titulo-catalogo">
+          <div className="gs-seccion__cabecera">
+            <div>
+              <p className="gs-portada__epigrafe">Catálogo</p>
+              <h2 id="titulo-catalogo">Juegos disponibles</h2>
+            </div>
+          </div>
+
+          <Filtros categorias={catalogo.categorias} categoria={categoria} onCategoria={setCategoria}
+                   busqueda={busqueda} onBusqueda={setBusqueda} orden={orden} onOrden={setOrden}
+                   soloOfertas={soloOfertas} onAlternarOfertas={() => setSoloOfertas((v) => !v)}
+                   cantidad={visibles.length} />
+
+          <ListaVideojuegos videojuegos={visibles} cargando={catalogo.cargando} error={catalogo.error}
+                            onReintentar={catalogo.reintentar} estaEnCarrito={carrito.estaEnCarrito}
+                            modoAdmin={modoAdmin} onAgregar={carrito.agregar} onEliminar={eliminarDelCatalogo} />
         </section>
 
-        <div id="catalogo">
-          <Filtros
-            categorias={categorias}
-            categoria={categoria}
-            onCategoria={setCategoria}
-            busqueda={busqueda}
-            onBusqueda={setBusqueda}
-            orden={orden}
-            onOrden={setOrden}
-            soloOfertas={soloOfertas}
-            onAlternarOfertas={() => setSoloOfertas((v) => !v)}
-            cantidad={visibles.length}
-          />
+        <AdministrarCatalogo categorias={catalogo.categorias} videojuegos={catalogo.videojuegos}
+                             modoAdmin={modoAdmin} onCambiarModo={() => setModoAdmin((v) => !v)}
+                             onAgregar={catalogo.agregar} onRestablecer={restablecer} modificado={catalogo.modificado} />
 
-          <ListaProductos
-            productos={visibles}
-            cargando={cargando}
-            error={error}
-            onReintentar={reintentar}
-            estaEnCarrito={carrito.estaEnCarrito}
-            onAgregar={carrito.agregar}
-          />
-        </div>
+        <Contacto mensajesRecibidos={mensajes.length} onEnviado={(m) => setMensajes((l) => [...l, m])} />
       </main>
 
-      <footer className="gs-pie">
-        <div className="container">
-          <p>GameStore · Proyecto de Desarrollo Frontend I · Duoc UC</p>
-        </div>
-      </footer>
+      <PieDePagina />
 
-      {/* La capa oscura solo existe mientras el panel esta abierto */}
-      {carritoAbierto && (
-        <div className="gs-capa" onClick={() => setCarritoAbierto(false)} />
-      )}
+      {carritoAbierto && <div className="gs-capa" onClick={() => setCarritoAbierto(false)} />}
 
-      <Carrito
-        lineas={carrito.lineas}
-        totalUnidades={carrito.totalUnidades}
-        totalPesos={carrito.totalPesos}
-        abierto={carritoAbierto}
-        onCerrar={() => setCarritoAbierto(false)}
-        onQuitarUnidad={carrito.quitarUnidad}
-        onEliminar={carrito.eliminar}
-        onVaciar={carrito.vaciar}
-      />
+      <Carrito lineas={carrito.lineas} totalUnidades={carrito.totalUnidades} totalPesos={carrito.totalPesos}
+               abierto={carritoAbierto} onCerrar={() => setCarritoAbierto(false)}
+               onQuitarUnidad={carrito.quitarUnidad} onEliminar={carrito.eliminar} onVaciar={carrito.vaciar} />
     </>
   );
-}
-
-function filtrar(productos, busqueda, categoria, soloOfertas) {
-  const texto = busqueda.trim().toLowerCase();
-
-  return productos.filter((p) => {
-    if (categoria !== 'todas' && p.categoria !== categoria) return false;
-    if (soloOfertas && !hayOferta(p)) return false;
-    if (!texto) return true;
-
-    return p.titulo.toLowerCase().includes(texto)
-      || p.descripcion.toLowerCase().includes(texto)
-      || p.plataforma.toLowerCase().includes(texto);
-  });
-}
-
-function ordenar(productos, orden) {
-  const copia = [...productos];
-
-  switch (orden) {
-    case 'precio-asc':
-      return copia.sort((a, b) => a.precioOferta - b.precioOferta);
-    case 'precio-desc':
-      return copia.sort((a, b) => b.precioOferta - a.precioOferta);
-    case 'rating':
-      return copia.sort((a, b) => b.rating - a.rating);
-    default:
-      // Relevancia: primero los destacados, despues por valoracion
-      return copia.sort((a, b) =>
-        (b.destacado - a.destacado) || (b.rating - a.rating));
-  }
 }

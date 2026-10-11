@@ -25,7 +25,7 @@ export function useCarrito() {
       }
       return [...actuales, {
         id: producto.id,
-        titulo: producto.titulo,
+        nombre: producto.nombre,
         precio: producto.precioOferta,
         imagen: producto.imagen,
         cantidad: 1

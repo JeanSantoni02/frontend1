@@ -1,7 +1,8 @@
 # GameStore
 
-Tienda de videojuegos construida con React. Proyecto de la asignatura
-Desarrollo Frontend I (PFY2201), Duoc UC.
+Sitio web de una tienda de videojuegos online, construido con HTML5, CSS3, JavaScript,
+Bootstrap 5 y React. Evaluación Final Transversal de Desarrollo Frontend I (PFY2201),
+Duoc UC.
 
 **Sitio en línea:** https://jeansantoni02.github.io/frontend1/
 
@@ -9,98 +10,29 @@ Desarrollo Frontend I (PFY2201), Duoc UC.
 
 ## Qué hace
 
-Un catálogo de doce juegos que se carga desde un archivo JSON y un carrito de
-compras que sobrevive a la recarga de la página.
+- **Inicio** con una portada y un resumen del catálogo.
+- **Catálogo** de videojuegos en tarjetas con imagen, nombre, precio y descripción,
+  que se filtra por categoría, por texto y por ofertas, y se ordena por precio o valoración.
+- **Carrito** para agregar y quitar juegos, con contador de unidades y total.
+- **Administración** para agregar juegos nuevos al catálogo o eliminar los existentes.
+- **Contacto** con un formulario de nombre, correo y mensaje que valida los datos antes
+  de enviarlos.
 
-- Cada juego muestra nombre, precio normal, precio de oferta, descripción, imagen,
-  categoría, plataforma y valoración.
-- El carrito permite agregar y eliminar productos, ajustar cantidades, y calcula
-  el contador de unidades y el total a pagar.
-- El catálogo se filtra por categoría, por texto y por ofertas, y se ordena por
-  precio o valoración.
+Todo funciona en celular, tablet y escritorio.
 
 ---
 
-## Cómo está hecho
+## Instalación y uso
 
-| Pieza | Para qué |
-|---|---|
-| React 18 | Componentes y estado de la interfaz |
-| Vite 5 | Servidor de desarrollo y empaquetado |
-| Bootstrap 5 | Grilla responsiva y utilidades, por CDN |
-| CSS propio | Identidad visual de la tienda |
+Requiere [Node.js](https://nodejs.org) 18 o superior.
 
-### Estructura
-
-```
-src/
-├── main.jsx                 punto de entrada
-├── App.jsx                  arma la pantalla y conecta los estados
-├── componentes/
-│   ├── Encabezado.jsx       marca y botón del carrito con su contador
-│   ├── Filtros.jsx          búsqueda, orden, categorías y ofertas
-│   ├── ListaProductos.jsx   grilla, carga, error y sin resultados
-│   ├── TarjetaProducto.jsx  un juego del catálogo
-│   └── Carrito.jsx          panel lateral con el detalle y el total
-├── hooks/
-│   ├── useProductos.js      carga el catálogo con useEffect
-│   └── useCarrito.js        estado del carrito y sus totales
-├── utilidades/
-│   └── formato.js           precios en pesos y cálculo de descuento
-└── estilos/
-    └── estilos.css
-
-public/assets/
-├── data/productos.json      el catálogo
-└── img/                     portadas en SVG
+```bash
+git clone https://github.com/JeanSantoni02/frontend1.git
 ```
 
----
-
-## Estado con `useState`
-
-| Dónde | Qué guarda |
-|---|---|
-| `useProductos` | La lista de productos, las categorías, si está cargando y el error |
-| `useCarrito` | Las líneas del carrito, de donde salen el contador y el total |
-| `App` | Búsqueda, categoría, orden, si se ven solo ofertas y si el panel está abierto |
-
-El panel del carrito no se abre solo al agregar un juego: el contador del
-encabezado y el texto del botón ya avisan que entró, y así se puede seguir
-navegando el catálogo sin interrupciones.
-
-## Efectos con `useEffect`
-
-Dos efectos, cada uno con una responsabilidad:
-
-- **Cargar el catálogo.** `useProductos` pide el JSON al montar el componente,
-  simulando una fuente externa. Maneja el error y expone un `reintentar` que
-  vuelve a disparar el efecto.
-- **Guardar el carrito.** `useCarrito` escribe en `localStorage` cada vez que
-  cambian las líneas, de modo que el carrito sigue ahí al recargar.
-
-El efecto de carga usa una bandera para no actualizar el estado si el componente
-se desmonta antes de que llegue la respuesta.
-
-## Renderizado condicional
-
-| Situación | Qué se muestra |
-|---|---|
-| Cargando | Seis tarjetas vacías con animación, en vez de una pantalla en blanco |
-| Error al cargar | Aviso con el motivo y un botón para reintentar |
-| Ningún resultado | Mensaje de búsqueda sin coincidencias |
-| Carrito vacío | Mensaje invitando a agregar un juego, en vez del total |
-| Juego ya agregado | El botón pasa de "Agregar al carrito" a "En el carrito", en verde |
-| Juego sin stock | El botón queda deshabilitado con el texto "Sin stock" |
-| Juego en oferta | Aparece la etiqueta con el porcentaje y el precio normal tachado |
-| Carrito con productos | El contador aparece en el encabezado |
-| Filtro de ofertas | El botón alterna entre "Ver solo ofertas" y "Viendo solo ofertas" |
-
----
-
-## Cómo ejecutarlo
-
-Requiere Node.js 18 o superior.
+```bash
+cd frontend1
+```
 
 ```bash
 npm install
@@ -110,9 +42,119 @@ npm install
 npm run dev
 ```
 
-Queda en http://localhost:5173.
+El sitio queda en http://localhost:5173.
 
-Para generar la versión de producción:
+| Comando | Para qué |
+|---|---|
+| `npm run dev` | Servidor de desarrollo con recarga automática |
+| `npm test` | Pruebas unitarias |
+| `npm run build` | Versión de producción en `dist/` |
+| `npm run preview` | Sirve la versión de producción en http://localhost:4173 |
+| `npm run deploy` | Publica en GitHub Pages |
+
+### Cómo usar el sitio
+
+1. **Filtrar:** en el catálogo, elige una categoría con los botones o escribe en el buscador.
+2. **Comprar:** "Agregar al carrito" suma el juego; el botón cambia a "En el carrito" y el
+   contador de la barra se actualiza. El botón del carrito abre el detalle con el total.
+3. **Agregar un juego:** en Administrar completa el formulario. Si no pones imagen, se
+   genera una portada con el nombre. El juego aparece primero en el catálogo, marcado como
+   "Nuevo".
+4. **Eliminar un juego:** en Administrar presiona "Eliminar juegos"; cada tarjeta muestra
+   un botón ×. Un juego eliminado también sale del carrito. "Restablecer catálogo" vuelve
+   al catálogo original.
+5. **Contactar:** completa el formulario. Los errores aparecen bajo cada campo al salir de
+   él o al intentar enviar.
+
+---
+
+## Estructura
+
+```
+index.html                       punto de montaje y Bootstrap 5 por CDN
+src/
+├── main.jsx                     arranca React
+├── App.jsx                      estado compartido y conexión de los componentes
+├── componentes/
+│   ├── BarraNavegacion.jsx      navbar de Bootstrap con las secciones y el carrito
+│   ├── Portada.jsx              sección de inicio
+│   ├── Filtros.jsx              búsqueda, orden, categorías y ofertas
+│   ├── ListaVideojuegos.jsx     grilla, carga, error y sin resultados
+│   ├── TarjetaVideojuego.jsx    card de Bootstrap de un juego
+│   ├── AdministrarCatalogo.jsx  alta de juegos y modo eliminar
+│   ├── Contacto.jsx             sección de contacto
+│   ├── FormularioContacto.jsx   formulario con validación
+│   ├── Carrito.jsx              panel lateral del carrito
+│   └── PieDePagina.jsx          footer
+├── hooks/
+│   ├── useCatalogo.js           carga el catálogo y lo agrega o elimina
+│   └── useCarrito.js            líneas del carrito y totales
+├── datos/
+│   └── videojuegos.js           objeto JavaScript con el catálogo
+├── utilidades/
+│   ├── catalogo.js              filtrado, orden y portada de reemplazo
+│   ├── validacion.js            reglas de los formularios
+│   └── formato.js               precios en pesos chilenos
+└── estilos/
+    └── estilos.css              identidad visual, Flexbox y CSS Grid
+public/assets/img/               portadas de los juegos
+scripts/capturas.mjs             recorre el sitio y genera las capturas
+```
+
+---
+
+## Cómo cumple cada requisito
+
+### HTML, CSS y Bootstrap 5
+
+| Requisito | Dónde |
+|---|---|
+| Etiquetas semánticas | `<header>` y `<nav>` en la barra, `<main>`, una `<section>` por sección, `<article>` por tarjeta, `<form>`, `<aside>` para el carrito y `<footer>` |
+| Barra de navegación | `navbar` de Bootstrap con enlaces a Inicio, Catálogo, Administrar y Contacto; en celular se colapsa en un menú. Marca la sección que está a la vista |
+| Tarjetas | `card`, `card-img-top`, `card-body`, `card-title`, `card-text` y `card-footer` de Bootstrap |
+| Maquetación responsiva | Grilla de Bootstrap: 1 columna en celular, 2 en tablet, 3 y 4 en escritorio |
+| Flexbox | Barra de navegación, filtros, pie de tarjeta, panel del carrito y pie de página |
+| CSS Grid | Portada (texto y cifras), sección de contacto (datos y formulario) y formulario de alta (4, 2 o 1 columna según el ancho) |
+| Estilos propios | `estilos.css`, con variables CSS para la paleta de la tienda |
+
+### JavaScript
+
+| Requisito | Dónde |
+|---|---|
+| Objeto con los videojuegos | `src/datos/videojuegos.js`: el objeto `catalogo` con las categorías y cada juego (nombre, categoría, precio, descripción, imagen, plataforma, valoración y stock) |
+| Tarjetas generadas dinámicamente | `ListaVideojuegos` recorre el arreglo con `map` y crea una `TarjetaVideojuego` por juego |
+| Filtrado por categoría | Botones de categoría en `Filtros`; la lógica está en `filtrar()` de `utilidades/catalogo.js` |
+| Validación del formulario | `validarContacto()` en `utilidades/validacion.js`: campos obligatorios, largo del nombre, formato del correo y largo del mensaje, con un mensaje de error por campo |
+
+### React
+
+| Requisito | Dónde |
+|---|---|
+| Componentes | Uno por responsabilidad: barra, portada, filtros, lista, tarjeta, administración, contacto, formulario, carrito y pie |
+| Estado de la lista de juegos | `useCatalogo` guarda el catálogo con `useState` y expone `agregar`, `eliminar` y `restablecer` |
+| Carga desde un archivo | Un `useEffect` importa `videojuegos.js` de forma diferida: el catálogo se descarga como un archivo aparte después de que la página carga, con estado de carga y de error |
+| Props entre componentes | `App` mantiene los filtros y pasa los juegos filtrados a `ListaVideojuegos`; al cambiar una categoría en `Filtros`, la lista se vuelve a renderizar. Eliminar un juego en la administración lo quita también del carrito |
+
+### Optimización y pruebas
+
+- 31 pruebas unitarias sobre la validación de los formularios y el filtrado del catálogo:
+
+```bash
+npm test
+```
+
+- El catálogo se descarga como un archivo separado del resto de la aplicación, así que la
+  página aparece antes.
+- Las imágenes se cargan de forma diferida (`loading="lazy"`).
+- Los formularios usan `label`, `aria-invalid` y `aria-describedby`, y el foco salta al
+  primer campo con error.
+
+---
+
+## Capturas
+
+Las capturas de la carpeta [`capturas/eft/`](capturas/eft/) se generan solas con el sitio
+compilado y servido:
 
 ```bash
 npm run build
@@ -122,32 +164,10 @@ npm run build
 npm run preview
 ```
 
-Para publicar en GitHub Pages:
-
-```bash
-npm run deploy
-```
-
-El build se arma con rutas relativas, así que funciona igual servido desde la
-raíz de un dominio o desde un subdirectorio como el de GitHub Pages.
-
----
-
-## Evidencia
-
-Las capturas de la semana 8 están en [`capturas/semana8/`](capturas/semana8/) y
-reunidas en el informe
-[Evidencias Semana 8](capturas/Evidencias%20Semana%208%20Jean%20Santoni%20Frontend%201.pdf).
-
-Se regeneran solas con la aplicación compilada y servida:
-
 ```bash
 node scripts/capturas.mjs
 ```
 
-El script recorre la aplicación con Chrome: carga el catálogo, agrega y elimina
-productos del carrito, aplica filtros y fuerza el error de red para capturar cada
-estado sin intervención manual.
-
-Las capturas de la semana 6, cuando el proyecto era JavaScript sin framework,
-quedaron en [`capturas/`](capturas/).
+El script recorre el sitio con Chrome: carga el catálogo, filtra, usa el carrito, envía el
+formulario con datos vacíos, inválidos y correctos, agrega y elimina juegos, y repite la
+revisión en tamaño celular.
